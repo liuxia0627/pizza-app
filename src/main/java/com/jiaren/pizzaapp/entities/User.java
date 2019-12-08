@@ -11,5 +11,5 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class User extends BaseIdentity{
     @Column
-    private Set<Role> roleSet;
+    private Role role;
 }
