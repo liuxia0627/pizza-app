@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -11,11 +12,11 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    private Long id;
 
-    //to be defined
-    private enum RoleName {Admin, Role1, Role2}
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
     @Column
-    private RoleName roleName;
+    private String name;
 }
