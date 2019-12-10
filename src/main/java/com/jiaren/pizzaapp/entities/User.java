@@ -11,8 +11,8 @@ import java.util.Set;
 @Entity
 @Data
 @RequiredArgsConstructor
-public class User extends BaseIdentity{
-
+public class User extends BaseIdentity {
     @ManyToMany
-    private Set<Role> roles;
+    @JoinTable(name ="UserRole", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roleSet;
 }
