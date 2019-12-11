@@ -4,20 +4,28 @@ import com.jiaren.pizzaapp.entities.Customer;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class CustomerRepositoryTest {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Before
+    public void before() {
+        Customer testCustomer = new Customer();
+        testCustomer.setName("testCustomer");
+        customerRepository.save(testCustomer);
+    }
 
     @Test
     public void testAddCustomer() {
@@ -29,9 +37,6 @@ public class CustomerRepositoryTest {
 
     @Test
     public void testFetchUser() {
-        Customer customerForFetching = new Customer();
-        customerForFetching.setName("customerForFetching");
-        customerRepository.save(customerForFetching);
-        assertEquals("customerForFetching", customerRepository.findByName("customerForFetching").getName());
+        assertEquals("testCustomer", customerRepository.findByName("testCustomer").getName());
     }
 }

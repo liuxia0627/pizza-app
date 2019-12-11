@@ -13,6 +13,5 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class User extends BaseIdentity {
     @ManyToMany
-    @JoinTable(name ="UserRole", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roleSet;
 }

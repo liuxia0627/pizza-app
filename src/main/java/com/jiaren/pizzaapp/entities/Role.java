@@ -17,6 +17,6 @@ public class Role {
     @ManyToMany(mappedBy = "roleSet")
     private Set<User> users;
 
-    @Column
+    @Column(unique = true)
     private String name;
 }

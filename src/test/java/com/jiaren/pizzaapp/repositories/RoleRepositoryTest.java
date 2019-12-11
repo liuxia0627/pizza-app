@@ -9,20 +9,23 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class RoleRepositoryTest {
 
-    @Autowired private RoleRepository roleRepository;
-    @Autowired private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Before
-    public void before(){
+    public void before() {
         Role testRole = new Role();
         testRole.setName("testRole");
         roleRepository.save(testRole);
@@ -34,22 +37,19 @@ public class RoleRepositoryTest {
     }
 
     @Test
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testAddRole() {
         Role roleForAdding = new Role();
-        roleForAdding.setName("testAddRole");
+        roleForAdding.setName("roleForAdding");
         Role returnedRoleAfterAdding = roleRepository.save(roleForAdding);
         assertEquals(roleForAdding.getName(), returnedRoleAfterAdding.getName());
     }
 
     @Test
-    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     public void testFetchRoleByName() {
         assertEquals("testRole", roleRepository.findByName("testRole").getName());
     }
 
 //    @Test
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
 //    public void testFetchRoleByUserId() {
 //        User testUser = userRepository.findByName("testUser");
 //        Long userId = testUser.getId();
