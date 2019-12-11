@@ -1,25 +1,25 @@
 package com.jiaren.pizzaapp.entities;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.jiaren.pizzaapp.types.JpaToJsonConverter;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
+import java.util.Map;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class OrderedPizza {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Type(type = "jsonb")
-    @Column(name = "ordered_pizza", nullable = false, columnDefinition = "jsonb")
-    private String orderedPizza;
+    @Column(name = "info", nullable = false)
+    @Convert(converter = JpaToJsonConverter.class)
+    private Map<String, Object> info;
+
+
 }
