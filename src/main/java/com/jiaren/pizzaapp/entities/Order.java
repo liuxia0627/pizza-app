@@ -8,25 +8,24 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Data
 @RequiredArgsConstructor
-public class Order implements Serializable {
-
-    private static final long serialVersionUID = -6178054163022548905L;
+@Table(name = "order_table")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "customer")
+    @ManyToOne
+    @JoinColumn(name = "customer")
     private Customer customer;
 
-    @Column(name = "pizza_set", nullable = false)
+    @OneToMany
     private Set<OrderedPizza> pizzaSet;
 
     @Column(name = "status", nullable = false)
@@ -49,12 +48,12 @@ public class Order implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime processTime;
 
-    @Column(name = "deliverTime_time")
+    @Column(name = "deliver_time")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime deliverTime;
 
-    @Column(name = "completeTime_time")
+    @Column(name = "complete_time")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime completeTime;
@@ -65,6 +64,7 @@ public class Order implements Serializable {
     @PrePersist
     public void prePersist() {
         createTime = LocalDateTime.now();
+        status = Status.CREATE;
     }
 
 }
