@@ -52,16 +52,16 @@ public class OrderRepositoryTest {
         orderRepository.save(orderForAdding);
         Order returnedOrderForUpdating = orderRepository.findById(orderForAdding.getId()).orElse(null);
         assertNotNull(returnedOrderForUpdating);
-        assertEquals(returnedOrderForUpdating.getStatus(), orderForAdding.getStatus());
+        assertEquals(orderForAdding.getStatus(), returnedOrderForUpdating.getStatus());
 
         returnedOrderForUpdating.setStatus(Status.PROCESS);
         orderRepository.save(returnedOrderForUpdating);
         Order returnedOrderAfterUpdating = orderRepository.findById(orderForAdding.getId()).orElse(null);
 
         assertNotNull(returnedOrderAfterUpdating);
-        assertEquals(returnedOrderAfterUpdating.getId(), orderForAdding.getId());
-        assertEquals(returnedOrderAfterUpdating.getPhoneNumber(), orderForAdding.getPhoneNumber());
-        assertEquals(returnedOrderAfterUpdating.getDeliverAddress(), orderForAdding.getDeliverAddress());
+        assertEquals(orderForAdding.getId(), returnedOrderAfterUpdating.getId());
+        assertEquals(orderForAdding.getPhoneNumber(), returnedOrderAfterUpdating.getPhoneNumber());
+        assertEquals(orderForAdding.getDeliverAddress(), returnedOrderAfterUpdating.getDeliverAddress());
     }
 
     @Test
@@ -82,15 +82,6 @@ public class OrderRepositoryTest {
         assertTrue(orderRepository.findById(orderForFetching2.getId()).isPresent());
     }
 
-
-    public void testFetchOrderByCustomer() {
-
-    }
-
-    public void testFetchOrderedPizzaWithPizzaSet() {
-
-    }
-
     @Test
     @Transactional
     public void testFetchOrderByStatus() {
@@ -107,7 +98,6 @@ public class OrderRepositoryTest {
         returnedOrderForUpdating.setStatus(Status.COMPLETE);
         orderRepository.save(returnedOrderForUpdating);
         List<Order> returnedOrderAfterFetching = orderRepository.findByStatus(returnedOrderForUpdating.getStatus());
-        System.out.println(returnedOrderAfterFetching);
         assertFalse(returnedOrderAfterFetching.contains(orderForFetching1));
         assertTrue(returnedOrderAfterFetching.contains(returnedOrderForUpdating));
     }
@@ -158,7 +148,6 @@ public class OrderRepositoryTest {
         orderRepository.save(orderForFetching2);
         LocalDateTime endTime = LocalDateTime.now();
         List<Order> returnedOrderAfterFetching = orderRepository.findByCreateTimeBetween(beginTime, endTime);
-        System.out.println(returnedOrderAfterFetching);
         assertFalse(returnedOrderAfterFetching.contains(orderForFetching1));
         assertTrue(returnedOrderAfterFetching.contains(orderForFetching2));
     }
@@ -177,7 +166,6 @@ public class OrderRepositoryTest {
         orderRepository.save(orderForFetching1);
         orderRepository.save(orderForFetching2);
         List<Order> returnedOrderAfterFetching = orderRepository.findByTotalPriceBetween(5.0, 50.0);
-        System.out.println(returnedOrderAfterFetching);
         assertFalse(returnedOrderAfterFetching.contains(orderForFetching2));
         assertTrue(returnedOrderAfterFetching.contains(orderForFetching1));
     }
