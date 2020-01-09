@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -64,30 +62,5 @@ public class AddressRepositoryTest {
         assertNull(returnedAddressAfterDeleting);
     }
 
-    @Test
-    public void testFetchAddressByAddressDetails() {
-        Address addressForFetching1 = new Address();
-        addressForFetching1.setAddressDetails("VICMelbourneCollinsStreet3080");
-        addressRepository.save(addressForFetching1);
-        Address addressForFetching2 = new Address();
-        addressForFetching2.setAddressDetails("VICMelbourneFranklinStreet3000");
-        addressRepository.save(addressForFetching2);
-        List<Address> returnedAddressAfterFetching = addressRepository.findByAddressDetails(addressForFetching1.getAddressDetails());
-        assertTrue(returnedAddressAfterFetching.contains(addressForFetching1));
-        assertFalse(returnedAddressAfterFetching.contains(addressForFetching2));
-    }
-
-    @Test
-    public void testFetchAddressByAddressDeatisContains() {
-        Address addressForFetching1 = new Address();
-        addressForFetching1.setAddressDetails("VICMelbourneCollinsStreet3080");
-        addressRepository.save(addressForFetching1);
-        Address addressForFetching2 = new Address();
-        addressForFetching2.setAddressDetails("VICMelbourneFranklinStreet3000");
-        addressRepository.save(addressForFetching2);
-        List<Address> returnedAddressAfterFetching = addressRepository.findByAddressDetailsContainsIgnoreCase("collins");
-        assertTrue(returnedAddressAfterFetching.contains(addressForFetching1));
-        assertFalse(returnedAddressAfterFetching.contains(addressForFetching2));
-    }
 
 }

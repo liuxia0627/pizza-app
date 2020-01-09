@@ -120,22 +120,6 @@ public class OrderRepositoryTest {
 
     @Test
     @Transactional
-    public void testFetchOrderByDeliverAddress() {
-        Order orderForFetching1 = new Order();
-        orderForFetching1.setPhoneNumber("0423666666");
-        orderForFetching1.setDeliverAddress("VICMelbourneFranklinStreet3000");
-        Order orderForFetching2 = new Order();
-        orderForFetching2.setPhoneNumber("0423888888");
-        orderForFetching2.setDeliverAddress("VICMelbourneCollinsStreet3080");
-        orderRepository.save(orderForFetching1);
-        orderRepository.save(orderForFetching2);
-        List<Order> returnedOrderAfterFetching = orderRepository.findByDeliverAddressContainsIgnoreCase("collins");
-        assertTrue(returnedOrderAfterFetching.contains(orderForFetching2));
-        assertFalse(returnedOrderAfterFetching.contains(orderForFetching1));
-    }
-
-    @Test
-    @Transactional
     public void testFetchOrderByCreateTimeBetween() {
         Order orderForFetching1 = new Order();
         orderForFetching1.setPhoneNumber("0423666666");
